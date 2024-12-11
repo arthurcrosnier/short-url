@@ -1,3 +1,4 @@
+// src/components/UrlShortener/UrlForm.tsx
 import { Input, Button, VStack, Text } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { FormInputs } from "@/types/urlShortener.type";
@@ -27,9 +28,10 @@ export function UrlForm({ onSubmit, isLoading }: UrlFormProps) {
           })}
           placeholder="Paste your long URL here"
           size="lg"
-          bg="gray.50"
-          _hover={{ bg: "gray.100" }}
-          _focus={{ bg: "white" }}
+          bg="bg-surface"
+          color="on-bg-muted"
+          _hover={{ bg: "bg-surface" }}
+          _focus={{ bg: "bg-surface" }}
         />
         {errors.url && (
           <Text color="red.500" fontSize="sm" width="100%">
@@ -42,7 +44,8 @@ export function UrlForm({ onSubmit, isLoading }: UrlFormProps) {
           isLoading={isLoading}
           size="lg"
           width="100%"
-          className="hover:bg-blue-700 transition-colors"
+          _hover={{ bg: "blue.700" }}
+          transition="background-color 0.2s"
         >
           Shorten
         </Button>
