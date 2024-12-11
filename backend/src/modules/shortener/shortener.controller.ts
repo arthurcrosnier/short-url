@@ -8,11 +8,6 @@ import { CreateUrlDto } from './dto/create-url.dto';
 export class ShortenerController {
   constructor(private readonly shortenerService: ShortenerService) {}
 
-  @Get()
-  async hello() {
-    return 'Hello World';
-  }
-
   @Post()
   async create(@Body() createUrlDto: CreateUrlDto, @Req() request: Request) {
     const shortUrl = await this.shortenerService.create(createUrlDto);

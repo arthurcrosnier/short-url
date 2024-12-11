@@ -26,12 +26,41 @@ export class ShortenerService {
     if (existingUrl) {
       return existingUrl;
     }
-    const shortCode = await this.generateShortCode();
+
+    let shortCode = '';
+    let shortUrlExists = true;
+    let i = 0;
+
+    while (shortUrlExists && i < 50) {
+      if (i === 50) {
+        throw new Error('Failed to generate a unique short code');
+      }
+      shortCode = await this.generateShortCode();
+      const existingShortUrl = await this.shortUrlRepository.findOne({
+        where: { shortCode },
+      });
+      shortUrlExists = existingShortUrl !== null;
+      i++;
+    }
+
     const shortUrl = this.shortUrlRepository.create({
       originalUrl: createUrlDto.originalUrl,
       shortCode,
       visits: 0,
     });
+
     return this.shortUrlRepository.save(shortUrl);
+  }
+
+  async findOne(shortCode: string): Promise<ShortUrl> {
+    const shortUrl = await this.shortUrlRepository.findOne({
+      where: { shortCode },
+    });
+
+    if (!shortUrl) {
+      throw new NotFoundException('URL not found');
+    }
+
+    return shortUrl;
   }
 }
