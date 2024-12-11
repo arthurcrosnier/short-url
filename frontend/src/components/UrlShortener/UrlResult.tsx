@@ -12,15 +12,37 @@ export function UrlResult(props: { shortUrl: string }) {
   };
 
   return (
-    <Box className="mt-8 bg-blue-50 rounded-lg p-6 border border-blue-100">
-      <Text className="text-gray-700 font-medium mb-3">
+    <Box
+      mt="8"
+      bg="primary.50"
+      borderRadius="lg"
+      p="6"
+      borderWidth="1px"
+      borderColor="primary.100"
+    >
+      <Text color="on-bg-muted" fontWeight="medium" mb="3">
         Your shortened URL:
       </Text>
-      <Box className="flex flex-col sm:flex-row gap-4 items-center">
-        <Box className="flex-grow p-4 bg-white rounded-lg border border-gray-200 break-all">
+      <Box
+        display="flex"
+        flexDirection={{ base: "column", sm: "row" }}
+        gap="4"
+        alignItems="center"
+      >
+        <Box
+          flexGrow={1}
+          p="4"
+          bg="bg-surface"
+          borderRadius="lg"
+          borderWidth="1px"
+          borderColor="border-default"
+          overflowWrap="break-word"
+        >
           <Link
             href={props.shortUrl}
-            className="text-blue-600 hover:text-blue-800 font-medium"
+            color="primary.600"
+            _hover={{ color: "primary.800" }}
+            fontWeight="medium"
             isExternal
           >
             {props.shortUrl}
@@ -31,7 +53,7 @@ export function UrlResult(props: { shortUrl: string }) {
           colorScheme="blue"
           variant="outline"
           size="lg"
-          className="w-full sm:w-auto"
+          width={{ base: "full", sm: "auto" }}
         >
           Copy Link
         </Button>

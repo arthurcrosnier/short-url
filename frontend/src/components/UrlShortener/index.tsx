@@ -25,16 +25,30 @@ export function UrlShortener() {
   };
 
   return (
-    <Box className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
-      <Box className="max-w-4xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
-        <Text className="text-4xl font-bold text-center text-gray-900 mb-4">
-          Short<span className="text-blue-600">URL</span>
+    <Box bg="bg-surface" minH="100vh">
+      <Box maxW="4xl" mx="auto" px={{ base: "4", md: "6", lg: "8" }} py="12">
+        <Text
+          fontSize="4xl"
+          fontWeight="bold"
+          textAlign="center"
+          mb="4"
+          color="on-bg"
+        >
+          Short
+          <Text as="span" color="primary.500">
+            URL
+          </Text>
         </Text>
-        <Text className="text-center text-gray-600 mb-12 text-lg">
+        <Text fontSize="lg" textAlign="center" mb="12" color="on-bg-muted">
           Transform your long URLs into short, memorable links
         </Text>
 
-        <Box className="bg-white rounded-xl shadow-lg p-6 sm:p-8">
+        <Box
+          bg="bg-surface-elevated"
+          borderRadius="xl"
+          boxShadow="lg"
+          p={{ base: "6", md: "8" }}
+        >
           <UrlForm onSubmit={onSubmit} isLoading={isPending} />
           <UrlResult shortUrl={shortUrl} />
         </Box>
