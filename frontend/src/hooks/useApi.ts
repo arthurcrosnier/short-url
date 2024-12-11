@@ -1,11 +1,12 @@
 import { useMutation } from "@tanstack/react-query";
 import { handleApiError } from "@/utils/api";
 import type { ShortenResponse } from "../types/api.types";
+import { config } from "@/config/env";
 
 export const useShortenUrl = () => {
   return useMutation({
     mutationFn: async (url: string) => {
-      const response = await fetch("http://localhost:3000/s", {
+      const response = await fetch(`${config.apiUrl}/s`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -26,12 +27,9 @@ export const useGetOriginalUrl = () => {
   return useMutation({
     mutationFn: async (shortCodeOrUrl: string) => {
       const shortCode = shortCodeOrUrl.split("/").pop() || "";
-      const response = await fetch(
-        `http://localhost:3000/s/find/${shortCode}`,
-        {
-          method: "GET",
-        }
-      );
+      const response = await fetch(`${config.apiUrl}/s/find/${shortCode}`, {
+        method: "GET",
+      });
 
       if (!response.ok) {
         await handleApiError(response);
