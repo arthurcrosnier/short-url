@@ -12,7 +12,12 @@ export const useShortenUrl = () => {
         },
         body: JSON.stringify({ originalUrl: url }),
       });
-      if (!response.ok) throw new Error("Failed to shorten URL");
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to shorten URL");
+      }
+
       return response.json() as Promise<ShortenResponse>;
     },
   });

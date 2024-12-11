@@ -19,6 +19,13 @@ export class ShortenerService {
   }
 
   async create(createUrlDto: CreateUrlDto): Promise<ShortUrl> {
+    const existingUrl = await this.shortUrlRepository.findOne({
+      where: { originalUrl: createUrlDto.originalUrl },
+    });
+
+    if (existingUrl) {
+      return existingUrl;
+    }
     const shortCode = await this.generateShortCode();
     const shortUrl = this.shortUrlRepository.create({
       originalUrl: createUrlDto.originalUrl,

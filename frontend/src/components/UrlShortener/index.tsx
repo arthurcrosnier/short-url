@@ -18,8 +18,8 @@ export function UrlShortener() {
         setShortUrl(response.shortUrl);
         showToast("URL shortened successfully", "success");
       },
-      onError: () => {
-        showToast("Failed to shorten URL", "error");
+      onError: (error) => {
+        showToast(error.message, "error");
       },
     });
   };
