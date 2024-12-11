@@ -1,5 +1,15 @@
 // /src/modules/shortener/shortener.controller.ts
-import { Controller, Post, Get, Body, Req, Res } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Get,
+  Body,
+  Req,
+  Res,
+  BadRequestException,
+  NotFoundException,
+  Param,
+} from '@nestjs/common';
 import { Request, Response } from 'express';
 import { ShortenerService } from './shortener.service';
 import { CreateUrlDto } from './dto/create-url.dto';
@@ -20,6 +30,23 @@ export class ShortenerController {
       return res.redirect(301, shortUrl.originalUrl);
     }
     return res.status(404).send('URL not found');
+  }
+
+  @Get('find/:shortCode')
+  async find(@Param('shortCode') shortCode: string) {
+    if (!shortCode || shortCode.length !== 6) {
+      throw new BadRequestException('Invalid short code');
+    }
+
+    const shortUrl = await this.shortenerService.findOne(shortCode);
+
+    if (!shortUrl) {
+      throw new NotFoundException('URL not found');
+    }
+
+    return {
+      originalUrl: shortUrl.originalUrl,
+    };
   }
 
   @Post()

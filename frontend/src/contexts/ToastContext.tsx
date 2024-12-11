@@ -17,7 +17,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
     toast({
       title,
       status: type,
-      duration: 3000,
+      duration: 1500,
       isClosable: true,
     });
   };

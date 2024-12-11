@@ -24,7 +24,23 @@ export const theme = extendTheme({
       },
       "on-bg-muted": {
         default: "gray.600",
-        _dark: "gray.500",
+        _dark: "gray.400",
+      },
+      "input-bg": {
+        default: "white",
+        _dark: "gray.700",
+      },
+      "border-subtle": {
+        default: "gray.200",
+        _dark: "gray.700",
+      },
+      "accent-bg": {
+        default: "blue.50",
+        _dark: "blue.900",
+      },
+      "accent-border": {
+        default: "blue.100",
+        _dark: "blue.800",
       },
     },
   },

@@ -1,5 +1,5 @@
-// src/hooks/useApi.ts
 import { useMutation } from "@tanstack/react-query";
+import { handleApiError } from "@/utils/api";
 import type { ShortenResponse } from "../types/api.types";
 
 export const useShortenUrl = () => {
@@ -14,16 +14,30 @@ export const useShortenUrl = () => {
       });
 
       if (!response.ok) {
-        if (response.status === 429) {
-          throw new Error("You are being rate limited. Try again later.");
-        } else {
-          const errorData = await response.json();
-          console.log(errorData);
-          throw new Error(errorData.message || "Failed to shorten URL");
-        }
+        await handleApiError(response);
       }
 
       return response.json() as Promise<ShortenResponse>;
+    },
+  });
+};
+
+export const useGetOriginalUrl = () => {
+  return useMutation({
+    mutationFn: async (shortCodeOrUrl: string) => {
+      const shortCode = shortCodeOrUrl.split("/").pop() || "";
+      const response = await fetch(
+        `http://localhost:3000/s/find/${shortCode}`,
+        {
+          method: "GET",
+        }
+      );
+
+      if (!response.ok) {
+        await handleApiError(response);
+      }
+
+      return response.json() as Promise<{ originalUrl: string }>;
     },
   });
 };
