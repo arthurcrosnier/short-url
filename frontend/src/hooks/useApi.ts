@@ -5,7 +5,7 @@ import type { ShortenResponse } from "../types/api.types";
 export const useShortenUrl = () => {
   return useMutation({
     mutationFn: async (url: string) => {
-      const response = await fetch("http://localhost:3000/shortener", {
+      const response = await fetch("http://localhost:3000/s", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -14,8 +14,13 @@ export const useShortenUrl = () => {
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to shorten URL");
+        if (response.status === 429) {
+          throw new Error("You are being rate limited. Try again later.");
+        } else {
+          const errorData = await response.json();
+          console.log(errorData);
+          throw new Error(errorData.message || "Failed to shorten URL");
+        }
       }
 
       return response.json() as Promise<ShortenResponse>;

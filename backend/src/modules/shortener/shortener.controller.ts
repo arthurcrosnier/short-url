@@ -4,7 +4,7 @@ import { Request, Response } from 'express';
 import { ShortenerService } from './shortener.service';
 import { CreateUrlDto } from './dto/create-url.dto';
 
-@Controller('shortener')
+@Controller('s')
 export class ShortenerController {
   constructor(private readonly shortenerService: ShortenerService) {}
 
@@ -29,7 +29,7 @@ export class ShortenerController {
 
     return {
       originalUrl: shortUrl.originalUrl,
-      shortUrl: `${baseUrl}/shortener/${shortUrl.shortCode}`,
+      shortUrl: `${baseUrl}/s/${shortUrl.shortCode}`,
       shortCode: shortUrl.shortCode,
     };
   }
