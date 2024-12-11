@@ -1,8 +1,19 @@
+// src/App.tsx
+import { ChakraProvider } from "@chakra-ui/react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { UrlShortener } from "./components/UrlShortener";
+
+const queryClient = new QueryClient();
+
 function App() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2">
-      <p className="text-2xl font-bold">Init tailwindcss</p>
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <ChakraProvider>
+        <main className="min-h-screen bg-gray-50 py-12">
+          <UrlShortener />
+        </main>
+      </ChakraProvider>
+    </QueryClientProvider>
   );
 }
 
