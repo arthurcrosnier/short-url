@@ -9,7 +9,7 @@ export function ThemeToggle() {
     <Button
       onClick={toggleColorMode}
       position="fixed"
-      bottom="4"
+      top="4"
       right="4"
       borderRadius="full"
       width="40px"

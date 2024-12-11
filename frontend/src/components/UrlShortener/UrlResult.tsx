@@ -2,26 +2,33 @@
 import { Text, Link, Box, Button } from "@chakra-ui/react";
 import { useToast } from "@/contexts/ToastContext";
 
-export function UrlResult(props: { shortUrl: string }) {
+type UrlResultProps = {
+  url: string;
+  title: string;
+};
+
+export function UrlResult({ url, title }: UrlResultProps) {
   const { showToast } = useToast();
-  if (!props.shortUrl) return null;
+
+  if (!url) return null;
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(props.shortUrl);
+    navigator.clipboard.writeText(url);
     showToast("Link copied to clipboard", "success");
   };
 
   return (
     <Box
       mt="8"
-      bg="primary.50"
+      bg="accent-bg"
       borderRadius="lg"
       p="6"
       borderWidth="1px"
-      borderColor="primary.100"
+      borderColor="accent-border"
+      transition="all 0.2s"
     >
-      <Text color="on-bg-muted" fontWeight="medium" mb="3">
-        Your shortened URL:
+      <Text color="on-bg" fontWeight="medium" mb="3">
+        {title}
       </Text>
       <Box
         display="flex"
@@ -32,20 +39,24 @@ export function UrlResult(props: { shortUrl: string }) {
         <Box
           flexGrow={1}
           p="4"
-          bg="bg-surface"
+          bg="bg-surface-elevated"
           borderRadius="lg"
           borderWidth="1px"
-          borderColor="border-default"
+          borderColor="border-subtle"
           overflowWrap="break-word"
+          transition="all 0.2s"
+          _hover={{
+            borderColor: "blue.500",
+          }}
         >
           <Link
-            href={props.shortUrl}
-            color="primary.600"
-            _hover={{ color: "primary.800" }}
+            href={url}
+            color="blue.500"
+            _hover={{ color: "blue.600" }}
             fontWeight="medium"
             isExternal
           >
-            {props.shortUrl}
+            {url}
           </Link>
         </Box>
         <Button
@@ -54,6 +65,12 @@ export function UrlResult(props: { shortUrl: string }) {
           variant="outline"
           size="lg"
           width={{ base: "full", sm: "auto" }}
+          _hover={{
+            bg: "blue.50",
+            _dark: {
+              bg: "blue.900",
+            },
+          }}
         >
           Copy Link
         </Button>
