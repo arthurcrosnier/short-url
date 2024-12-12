@@ -1,4 +1,3 @@
-// hooks/useApi.ts
 import { useMutation } from "@tanstack/react-query";
 import { handleApiError } from "@/utils/api";
 import type { ShortenResponse } from "@/types/api.types";
@@ -30,6 +29,9 @@ export const useGetOriginalUrl = () => {
       const shortCode = shortCodeOrUrl.split("/").pop() || "";
       const response = await fetch(`${config.apiUrl}/s/find/${shortCode}`, {
         method: "GET",
+        headers: {
+          Accept: "application/json",
+        },
       });
 
       if (!response.ok) {
