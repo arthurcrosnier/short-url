@@ -1,6 +1,7 @@
-// src/components/UrlShortener/UrlResult.tsx
-import { Text, Link, Box, Button } from "@chakra-ui/react";
+import { Text, Box, Button } from "@chakra-ui/react";
+import { CheckIcon, CopyIcon } from "@chakra-ui/icons";
 import { useToast } from "@/contexts/ToastContext";
+import { useState } from "react";
 
 type UrlResultProps = {
   url: string;
@@ -9,12 +10,13 @@ type UrlResultProps = {
 
 export function UrlResult({ url, title }: UrlResultProps) {
   const { showToast } = useToast();
-
-  if (!url) return null;
+  const [hasCopied, setHasCopied] = useState(false);
 
   const handleCopy = () => {
     navigator.clipboard.writeText(url);
     showToast("Link copied to clipboard", "success");
+    setHasCopied(true);
+    setTimeout(() => setHasCopied(false), 2000);
   };
 
   return (
@@ -43,36 +45,54 @@ export function UrlResult({ url, title }: UrlResultProps) {
           borderRadius="lg"
           borderWidth="1px"
           borderColor="border-subtle"
-          overflowWrap="break-word"
+          overflowX="auto"
+          maxW="100%"
           transition="all 0.2s"
           _hover={{
             borderColor: "blue.500",
           }}
-        >
-          <Link
-            href={url}
-            color="blue.500"
-            _hover={{ color: "blue.600" }}
-            fontWeight="medium"
-            isExternal
-          >
-            {url}
-          </Link>
-        </Box>
-        <Button
-          onClick={handleCopy}
-          colorScheme="blue"
-          variant="outline"
-          size="lg"
-          width={{ base: "full", sm: "auto" }}
-          _hover={{
-            bg: "blue.50",
-            _dark: {
-              bg: "blue.900",
+          css={{
+            "&::-webkit-scrollbar": {
+              height: "8px",
+            },
+            "&::-webkit-scrollbar-track": {
+              background: "transparent",
+            },
+            "&::-webkit-scrollbar-thumb": {
+              background: "rgba(0, 0, 0, 0.1)",
+              borderRadius: "4px",
             },
           }}
         >
-          Copy Link
+          <Text
+            color="blue.500"
+            fontWeight="medium"
+            display="block"
+            whiteSpace="nowrap"
+          >
+            {url}
+          </Text>
+        </Box>
+        <Button
+          onClick={handleCopy}
+          colorScheme={hasCopied ? "green" : "blue"}
+          variant="outline"
+          size="lg"
+          flexShrink={0}
+          width={{ base: "full", sm: "auto" }}
+          animation={hasCopied ? "scale.105" : undefined}
+          _hover={{
+            transform: "translateY(-2px)",
+            shadow: "md",
+            bg: hasCopied ? "green.50" : "blue.50",
+            _dark: {
+              bg: hasCopied ? "green.900" : "blue.900",
+            },
+          }}
+          transition="all 0.2s"
+          leftIcon={hasCopied ? <CheckIcon /> : <CopyIcon />}
+        >
+          {hasCopied ? "Copied!" : "Copy Link"}
         </Button>
       </Box>
     </Box>
