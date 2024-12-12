@@ -1,3 +1,4 @@
+//src/components/UrlShortener/UrlResult.tsx
 import { Text, Box, Button } from "@chakra-ui/react";
 import { CheckIcon, CopyIcon } from "@chakra-ui/icons";
 import { useToast } from "@/contexts/ToastContext";
@@ -19,6 +20,9 @@ export function UrlResult({ url, title }: UrlResultProps) {
     setTimeout(() => setHasCopied(false), 2000);
   };
 
+  if (!url) {
+    return null;
+  }
   return (
     <Box
       mt="8"
