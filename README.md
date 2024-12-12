@@ -28,8 +28,8 @@ A modern URL shortener built with NestJS and React. This application allows user
 
 ## 🌐 Live Demo
 
-- Frontend: https://short-url-frontend-cyan.vercel.app/
-- Backend API: https://short-url-backend-chi.vercel.app/
+- Frontend: [https://short-url-frontend-cyan.vercel.app/](https://short-url-frontend-cyan.vercel.app/)
+- Backend API: [https://short-url-backend-chi.vercel.app/](https://short-url-backend-chi.vercel.app/)
 
 ## 🏃‍♂️ Quick Start
 
@@ -87,11 +87,13 @@ docker-compose up --build
 
 ## 🔄 CI/CD
 
-This project uses Vercel for continuous integration and deployment. The backend and frontend are automatically deployed when changes are pushed to the develop branch.
+Automated deployments using GitHub Actions and Vercel:
 
-**Vercel Configuration:**
+- Builds and deployments triggered on push to `develop`
+- Frontend: [short-url-frontend-cyan.vercel.app](https://short-url-frontend-cyan.vercel.app/)
+- Backend: [short-url-backend-chi.vercel.app](https://short-url-backend-chi.vercel.app/)
 
--Connected to GitHub repository
--Production branch: develop
--Backend root folder: backend
--Frontend root folder: frontend
+Branch Strategy:
+
+- `main`: Production
+- `develop`: Development & Deployments
