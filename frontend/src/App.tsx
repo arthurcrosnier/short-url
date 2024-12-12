@@ -8,6 +8,7 @@ import { theme } from "@/config/theme";
 
 const queryClient = new QueryClient();
 
+// src/App.tsx
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
