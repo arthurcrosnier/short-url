@@ -29,18 +29,19 @@ export class ShortenerService {
 
     let shortCode = '';
     let shortUrlExists = true;
-    let i = 0;
 
-    while (shortUrlExists && i < 50) {
-      if (i === 50) {
-        throw new Error('Failed to generate a unique short code');
-      }
+    for (let i = 0; i < 50; i++) {
       shortCode = await this.generateShortCode();
       const existingShortUrl = await this.shortUrlRepository.findOne({
         where: { shortCode },
       });
-      shortUrlExists = existingShortUrl !== null;
-      i++;
+      if (!existingShortUrl) {
+        shortUrlExists = false;
+        break;
+      }
+    }
+    if (shortUrlExists) {
+      throw new Error('Failed to generate a unique short code');
     }
 
     const shortUrl = this.shortUrlRepository.create({
@@ -60,6 +61,9 @@ export class ShortenerService {
     if (!shortUrl) {
       throw new NotFoundException('URL not found');
     }
+
+    shortUrl.visits += 1;
+    await this.shortUrlRepository.save(shortUrl);
 
     return shortUrl;
   }

@@ -1,25 +1,11 @@
-// components/UrlShortener/ShortenForm.tsx
+// components/ShortenForm.tsx
+import { FormCard } from "@/components/common/FormCard";
 import { UrlInputForm } from "./UrlInputForm";
 import { UrlResult } from "./UrlResult";
-import { useToast } from "@/contexts/ToastContext";
-import { useShortenUrl } from "@/hooks/useApi";
-import { FormCard } from "@/components/common/FormCard";
-import { useState } from "react";
+import { useShortenForm } from "@/hooks/useUrlForm";
 
 export function ShortenForm() {
-  const [shortUrl, setShortUrl] = useState<string>("");
-  const { showToast } = useToast();
-  const { mutate, isPending } = useShortenUrl();
-
-  const handleSubmit = (url: string) => {
-    mutate(url, {
-      onSuccess: (response) => {
-        setShortUrl(response.shortUrl);
-        showToast("URL shortened successfully", "success");
-      },
-      onError: (error) => showToast(error.message, "error"),
-    });
-  };
+  const { resultUrl, handleSubmit, isLoading } = useShortenForm();
 
   return (
     <FormCard>
@@ -27,9 +13,10 @@ export function ShortenForm() {
         placeholder="Paste your long URL here"
         buttonText="Shorten URL"
         onSubmit={handleSubmit}
-        isLoading={isPending}
+        isLoading={isLoading}
+        shouldValidateUrl={true}
       />
-      <UrlResult url={shortUrl} title="Your shortened URL:" />
+      <UrlResult url={resultUrl} title="Your shortened URL:" />
     </FormCard>
   );
 }

@@ -1,25 +1,11 @@
-// components/UrlShortener/ResolveForm.tsx
+// components/ResolveForm.tsx
+import { FormCard } from "@/components/common/FormCard";
 import { UrlInputForm } from "./UrlInputForm";
 import { UrlResult } from "./UrlResult";
-import { useToast } from "@/contexts/ToastContext";
-import { useGetOriginalUrl } from "@/hooks/useApi";
-import { FormCard } from "@/components/common/FormCard";
-import { useState } from "react";
+import { useResolveForm } from "@/hooks/useUrlForm";
 
 export function ResolveForm() {
-  const [originalUrl, setOriginalUrl] = useState<string>("");
-  const { showToast } = useToast();
-  const { mutate, isPending } = useGetOriginalUrl();
-
-  const handleSubmit = (shortCode: string) => {
-    mutate(shortCode, {
-      onSuccess: (response) => {
-        setOriginalUrl(response.originalUrl);
-        showToast("Original URL retrieved successfully", "success");
-      },
-      onError: (error) => showToast(error.message, "error"),
-    });
-  };
+  const { resultUrl, handleSubmit, isLoading } = useResolveForm();
 
   return (
     <FormCard>
@@ -27,9 +13,9 @@ export function ResolveForm() {
         placeholder="Enter the short code or short URL"
         buttonText="Retrieve Original URL"
         onSubmit={handleSubmit}
-        isLoading={isPending}
+        isLoading={isLoading}
       />
-      <UrlResult url={originalUrl} title="Original URL:" />
+      <UrlResult url={resultUrl} title="Original URL:" />
     </FormCard>
   );
 }
