@@ -10,9 +10,6 @@ on:
 jobs:
   build-and-deploy-backend:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./backend
 
     steps:
       - uses: actions/checkout@v4
@@ -25,27 +22,28 @@ jobs:
           cache-dependency-path: "./backend/package-lock.json"
 
       - name: Install Dependencies
-        run: npm ci
+        run: |
+          cd backend
+          npm ci
 
       - name: Build
-        run: npm run build
+        run: |
+          cd backend
+          npm run build
 
-      - name: Deploy Backend to Vercel
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Deploy to Vercel
+        run: |
+          cd backend
+          vercel deploy --token ${VERCEL_TOKEN} --prod
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_BACKEND_PROJECT_ID }}
-        run: |
-          npx vercel pull --yes --environment=production --token=${VERCEL_TOKEN}
-          npx vercel build --prod --token=${VERCEL_TOKEN}
-          npx vercel deploy --prebuilt --prod --token=${VERCEL_TOKEN}
 
   build-and-deploy-frontend:
     needs: build-and-deploy-backend
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./frontend
 
     steps:
       - uses: actions/checkout@v4
@@ -58,17 +56,21 @@ jobs:
           cache-dependency-path: "./frontend/package-lock.json"
 
       - name: Install Dependencies
-        run: npm ci
+        run: |
+          cd frontend
+          npm ci
 
       - name: Build
-        run: npm run build
+        run: |
+          cd frontend
+          npm run build
 
-      - name: Deploy Frontend to Vercel
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Deploy to Vercel
+        run: |
+          cd frontend
+          vercel deploy --token ${VERCEL_TOKEN} --prod
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_FRONTEND_PROJECT_ID }}
-        run: |
-          npx vercel pull --yes --environment=production --token=${VERCEL_TOKEN}
-          npx vercel build --prod --token=${VERCEL_TOKEN}
-          npx vercel deploy --prebuilt --prod --token=${VERCEL_TOKEN}
