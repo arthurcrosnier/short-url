@@ -84,3 +84,14 @@ docker-compose up --build
    - Add CSRF protection
    - Implement URL scanning for malicious content
    - Add request validation middleware
+
+## 🔄 CI/CD
+
+This project uses Vercel for continuous integration and deployment. The backend and frontend are automatically deployed when changes are pushed to the develop branch.
+
+**Vercel Configuration:**
+
+-Connected to GitHub repository
+-Production branch: develop
+-Backend root folder: backend
+-Frontend root folder: frontend
