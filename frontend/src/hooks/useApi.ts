@@ -1,6 +1,7 @@
+// hooks/useApi.ts
 import { useMutation } from "@tanstack/react-query";
 import { handleApiError } from "@/utils/api";
-import type { ShortenResponse } from "../types/api.types";
+import type { ShortenResponse } from "@/types/api.types";
 import { config } from "@/config/env";
 
 export const useShortenUrl = () => {
