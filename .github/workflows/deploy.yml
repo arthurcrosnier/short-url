@@ -37,7 +37,7 @@ jobs:
       - name: Deploy to Vercel
         run: |
           cd backend
-          vercel deploy --token ${VERCEL_TOKEN} --prod
+          vercel deploy --token ${VERCEL_TOKEN} --prod --yes
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
 
@@ -71,6 +71,6 @@ jobs:
       - name: Deploy to Vercel
         run: |
           cd frontend
-          vercel deploy --token ${VERCEL_TOKEN} --prod
+          vercel deploy --token ${VERCEL_TOKEN} --prod --yes
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
