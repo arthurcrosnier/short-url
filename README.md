@@ -26,6 +26,11 @@ A modern URL shortener built with NestJS and React. This application allows user
 - React Query
 - React Hook Form
 
+## 🌐 Live Demo
+
+- Frontend: https://short-url-frontend-cyan.vercel.app/
+- Backend API: https://short-url-backend-chi.vercel.app/
+
 ## 🏃‍♂️ Quick Start
 
 1. Clone the repository:
