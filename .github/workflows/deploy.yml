@@ -37,9 +37,10 @@ jobs:
       - name: Deploy to Vercel
         run: |
           cd backend
-          vercel deploy --token ${VERCEL_TOKEN} --prod --yes --project-id ${VERCEL_PROJECT_ID}
+          vercel deploy --token ${VERCEL_TOKEN} --prod --yes
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_BACKEND_PROJECT_ID }}
 
   build-and-deploy-frontend:
@@ -72,7 +73,8 @@ jobs:
       - name: Deploy to Vercel
         run: |
           cd frontend
-          vercel deploy --token ${VERCEL_TOKEN} --prod --yes --project-id ${VERCEL_PROJECT_ID}
+          vercel deploy --token ${VERCEL_TOKEN} --prod --yes
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_FRONTEND_PROJECT_ID }}
