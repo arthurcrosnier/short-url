@@ -3,11 +3,10 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "framework": "vite",
-  "rewrites": [{ "source": "/(.*)", "destination": "/" }],
-  "builds": [
+  "rewrites": [
     {
-      "src": "src/index.html",
-      "use": "@vercel/static-build"
+      "source": "/(.*)",
+      "destination": "/"
     }
   ],
   "headers": [
