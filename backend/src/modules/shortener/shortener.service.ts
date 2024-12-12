@@ -13,6 +13,10 @@ export class ShortenerService {
     private shortUrlRepository: Repository<ShortUrl>,
   ) {}
 
+  async findAll(): Promise<ShortUrl[]> {
+    return this.shortUrlRepository.find();
+  }
+
   private async generateShortCode(): Promise<string> {
     const nanoid = customAlphabet('0123456789abcdefghijklmnopqrstuvwxyz', 6);
     return nanoid();

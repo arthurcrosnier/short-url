@@ -18,6 +18,20 @@ import { CreateUrlDto } from './dto/create-url.dto';
 export class ShortenerController {
   constructor(private readonly shortenerService: ShortenerService) {}
 
+  @Get('/all')
+  async findAll() {
+    const urls = await this.shortenerService.findAll();
+    return {
+      total: urls.length,
+      urls: urls.map((url) => ({
+        shortCode: url.shortCode,
+        originalUrl: url.originalUrl,
+        visits: url.visits,
+        createdAt: url.createdAt,
+      })),
+    };
+  }
+
   @Get(':shortCode')
   async findOne(@Req() req: Request, @Res() res: Response) {
     const shortCode = req.params.shortCode;
